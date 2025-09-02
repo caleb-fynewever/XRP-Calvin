@@ -20,7 +20,6 @@ public class DiverterSubsystem extends SubsystemBase {
   }
 
   private DiverterSubsystem() {
-    // Device number 4 maps to the physical Servo 1 port on the XRP
     servo = new XRPServo(Ports.DIVERTER_SERVO);
   }
 

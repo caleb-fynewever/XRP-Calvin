@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.auto.generated.AutonomousDistance;
 import frc.robot.commands.auto.generated.AutonomousTime;
 import frc.robot.commands.drive.DefaultDriveCommand;
+import frc.robot.commands.factories.DiverterCommandFactory;
+import frc.robot.commands.factories.IndexerCommandFactory;
+import frc.robot.commands.factories.IntakeCommandFactory;
 import frc.robot.subsystems.DiverterSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -18,6 +21,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.xrp.XRPOnBoardIO;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   private final DrivetrainSubsystem drivetrain = DrivetrainSubsystem.getInstance();
   private final DiverterSubsystem diverter = DiverterSubsystem.getInstance();
@@ -35,6 +40,18 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     drivetrain.setDefaultCommand(new DefaultDriveCommand(() -> -controller.getRawAxis(1), () -> -controller.getRawAxis(2)));
+    JoystickButton intakeButton = new JoystickButton(controller, 1);
+    intakeButton.whileTrue(Commands.parallel(
+      DiverterCommandFactory.setToIntake(),
+      IntakeCommandFactory.intake(), 
+      IndexerCommandFactory.indexUp())
+    );
+    JoystickButton rightScore = new JoystickButton(controller, 2);
+    rightScore.onTrue(DiverterCommandFactory.setToRightScore()).whileTrue(IndexerCommandFactory.indexUp());
+    JoystickButton leftScore = new JoystickButton(controller, 3);
+    leftScore.onTrue(DiverterCommandFactory.setToLeftScore()).whileTrue(IndexerCommandFactory.indexUp());
+    
+
 
     chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(drivetrain));
     chooser.addOption("Auto Routine Time", new AutonomousTime(drivetrain));

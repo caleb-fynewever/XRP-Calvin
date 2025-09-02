@@ -29,18 +29,18 @@ public final class Constants {
   }
 
   public static final class DiverterConstants {
-    public static final double INTAKE_ANGLE = 0.0;
-    public static final double LEFT_SHOOT_ANGLE = 90.0;
-    public static final double RIGHT_SHOOT_ANGLE = 180.0;
+    public static final double INTAKE_ANGLE = 90;
+    public static final double LEFT_SHOOT_ANGLE = 135;
+    public static final double RIGHT_SHOOT_ANGLE = 45;
   }
 
   public static final class IntakeConstants {
-    public static final double IN_SPEED = 0.5;
-    public static final double OUT_SPEED = -0.5;
+    public static final double IN_SPEED = -1.0;
+    public static final double OUT_SPEED = 1.0;
   }
 
   public static final class IndexerConstants {
-    public static final double UP_SPEED = 0.5;
-    public static final double DOWN_SPEED = -0.5;
+    public static final double UP_SPEED = -1.0;
+    public static final double DOWN_SPEED = 1.0;
   }
 }
